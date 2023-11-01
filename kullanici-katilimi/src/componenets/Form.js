@@ -10,7 +10,8 @@ const emptyMember = {
   password: "",
   termsofservice: false,
 };
-//Boş bir üye objesi oluşturduk
+
+//Boş bir üye objesi oluşturduk.
 const FormCard = ({ team, setTeam, teammember = emptyMember }) => {
   const [member, setMember] = useState(teammember);
   //teammember propsunu empyMember değişkenine atadık.
@@ -37,44 +38,51 @@ const FormCard = ({ team, setTeam, teammember = emptyMember }) => {
       .required("Kullanım şartlarını kabul etmeniz gerekiyor")
       .oneOf([true], "Kullanım şartlarını kabul etmeniz gerekiyor"),
   });
-
+  //Burada verilerin doğru girilmesi için doğrulama kuralları tanımladık.
   const formSubmit = (e) => {
     e.preventDefault();
-
+    //preventDefault ile tarayıcının varsayılan davranışını(sayfanın yeniden yüklenmesini) engelledik. Böylelikle form verilerini işlemeye devam ettik.
     for (let key in member) {
       console.log("checkValidationFor(key, member[key] >", key, member[key]);
       checkValidationFor(key, member[key]);
+      // burada member objesindeki form verilerinin doğrulama aşamalarını gerçekleştirdik. Her döngüde checkValidationFor çağırıp her alanın doğru ve geçerli veri içerip içermediğini kontrol ettik.
     }
 
     if (formValid) {
-      console.log("FROM SUBMIT EDİLDİ! ", e);
+      //form tüm doğrulama işlemlerinden geçtiyse yani formValid true ise aşağıdaki işlemleri yapar.
+      console.log("FORM SUBMIT EDİLDİ! ", e);
       axios
         .post("https://reqres.in/api/users/", member)
+        //Verile adrese HTTP post isteği gönderdik. Api'den dönen yanıt (res) işledik
         .then((res) => {
           if (res.status === 201) {
             console.log("Üye başarıyla kaydedildi.");
             console.log("API tarafından dönen veri:", res.data, res.status);
+            //Eğer res.status 201 ise veri başarılı bir şekilde gönderildiği anlamına geliyor.
+            setTeam([...team, res.data]);
           } else {
             console.log("Üye kaydedilirken bir hata oluştu.");
           }
-
-          setTeam([...team, res.data]);
         })
         .catch((err) => {
+          //hata ile karşılaşırsak karşılaşacağımız süreç
           console.error("Üye kaydedilirken bir hata ile karşılaşıldı", err);
         });
     }
   };
 
   const inputChangeHandler = (e) => {
+    //inputChangeHandler yaptığımız formdaki input alanlarındaki değişme olduğunda çalışmaya başlar.
     const { name, value, type, checked } = e.target;
     setMember({ ...member, [name]: type === "checkbox" ? checked : value });
+    //setMember ile bu değerler member state içinde güncelleriz.
     console.log("Name", name);
     console.log("Value", value);
     console.log("Type", type);
     console.log("Checked", checked);
     console.log("Member", member);
     checkValidationFor(name, type === "checkbox" ? checked : value);
+    //Değişen input değerini ve adını checkValidationFor adlı fonksiyona gönderir ve verilerin doğrulama kurallarına uyup uymadığını kontrol ederiz. Geçeri olmazsa teamFormSchema diye tanımladığımız doğrulama kurallarındaki uyarılar karşımıza çıkar.
   };
 
   useEffect(() => {
@@ -85,24 +93,32 @@ const FormCard = ({ team, setTeam, teammember = emptyMember }) => {
   useEffect(() => {
     teammember && setMember(teammember);
   }, [teammember]);
+  //Bu kod teammember prop'unun değeri varsa setMember ile member state'ini yeni üye verisiyle günceller. Bu kodu yeni üye eklemek ve mevcut üyeyi düzenlemek için kullanırız
 
   useEffect(() => {
     console.log("member >", member);
     teamFormSchema.isValid(member).then((valid) => setFormValid(valid));
   }, [member]);
-
+  //Bu kod member adlı state değiştiğinde çalışır. Değiştiğinde scope içinde kod işleme geçer. teamFromSchema ile member objesinin doğruluğunu kontrol eder ve sonucunda geçerli ise setFormValid ile FormValid state ine kaydeder. Eğer form geçerli ise true değer döner. True olduğunda 51. satırdaki kodlar çalışır.
   const checkValidationFor = (field, value) => {
+    // Bu fonksiyonun amacı formdaki bir alanın doğrulama işlemini gerçekleştirmek ve herhangi bir hata durumunda hata mesajını iletmektir. Fonksiyon 2 parametre alır (field alanın adı. name gibi) ve value(checked ve value gibi)
     Yup.reach(teamFormSchema, field)
+      //Yup.reach teamFromSchema adlı doğrulama şemasını kullanarak , doğrulama işlemini ilgili alana uygular.
       .validate(value)
+      //validate yöntemi belirli bir alandaki değerin doğrulama şemasına uygun olup olmadığını kontrol eder
       .then((valid) => {
         setFormErrors({ ...fromErrors, [field]: "" });
+        //Eğer değer doğrulama şemasına uygunsa yani bir hata oluşmazsa setFormErros ile bu alan için hata mesajı temizlenir.
       })
       .catch((err) => {
+        //Eğer değer doğrulama şemasına uymuyorsa bu bölüm çalışır
         console.log("HATA!", field, err.errors[0]);
+        //Consola hata mesajını ve hangi alanla ilgili olduğunu yazdırır.
         setFormErrors((prevFormErrors) => ({
           ...prevFormErrors,
           [field]: err.errors[0],
         }));
+        //Bu kısımda mevcut hata durumlarına yeni hata durumlarını ekleyerek kullanıcıyı bilgilendiririz.
       });
   };
 

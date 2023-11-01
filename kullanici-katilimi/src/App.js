@@ -9,7 +9,7 @@ const deneme = [
     email: "rifki@cabbar.com",
   },
 ];
-
+//Kontrol için boş bir array içinde obje oluşturarak kullanıcı bilgisi oluşturdum
 function App({ teammembers = deneme }) {
   const [kullanicilar, setKullanicilar] = useState([]);
   return (
@@ -24,6 +24,7 @@ function App({ teammembers = deneme }) {
               <Card.Text> {kullanici.email} </Card.Text>
             </Card.Body>
           </Card>
+          //react bootstrap kullanarak kullanıcı bilgilerini görüntülemek için card kullandım
         ))}
       </div>
       {kullanicilar.length > 0 && (
