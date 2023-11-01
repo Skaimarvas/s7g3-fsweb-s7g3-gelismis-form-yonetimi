@@ -11,7 +11,7 @@ const emptyMember = {
   termsofservice: false,
 };
 //Boş bir üye objesi oluşturduk
-const FormCard = ({ teammember = emptyMember }) => {
+const FormCard = ({ team, setTeam, teammember = emptyMember }) => {
   const [member, setMember] = useState(teammember);
   //teammember propsunu empyMember değişkenine atadık.
   const [fromErrors, setFormErrors] = useState({
@@ -26,17 +26,16 @@ const FormCard = ({ teammember = emptyMember }) => {
   const teamFormSchema = Yup.object().shape({
     name: Yup.string()
       .required("İsim alanı boş bırakılamaz!")
-      .min(3, "Ürün ismi 3 karakterden az olamaz."),
+      .min(3, "Üye ismi 3 karakterden az olamaz."),
     email: Yup.string()
       .email("Geçerli bir email adresi olması gerekiyor!")
       .required("Email adresi yazılması gerekiyor!"),
     password: Yup.string()
       .required("Şifre gerekiyor")
       .min(6, "Şifre 6 karakterden fazla olmalı!"),
-    termsofservice: Yup.boolean().oneOf(
-      [true],
-      "Kullanım şartlarını kabul etmeniz gerekiyor"
-    ),
+    termsofservice: Yup.boolean()
+      .required("Kullanım şartlarını kabul etmeniz gerekiyor")
+      .oneOf([true], "Kullanım şartlarını kabul etmeniz gerekiyor"),
   });
 
   const formSubmit = (e) => {
@@ -58,6 +57,8 @@ const FormCard = ({ teammember = emptyMember }) => {
           } else {
             console.log("Üye kaydedilirken bir hata oluştu.");
           }
+
+          setTeam([...team, res.data]);
         })
         .catch((err) => {
           console.error("Üye kaydedilirken bir hata ile karşılaşıldı", err);
