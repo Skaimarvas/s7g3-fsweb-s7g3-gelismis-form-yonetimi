@@ -37,12 +37,12 @@ Bu görevi tamamlamak için aşağıdaki testleri yazmanız ve çalıştırmanı
 Şunları yapacak testleri ayarlayın:
 
 - [x] `isim` inputunu alın ve bir isim yazın.
-- [ ] Girilen metnin sağladığınız adı içerip içermediğini kontrol etmek için bir assertion kullanın. (İpucu: .should assertion)
-- [ ] `email` inputunu alın ve bir email adresi girin
-- [ ] `şifre` inputunu alın ve bir şifre girin
-- [ ] Kullanıcının kullanım koşulları kutusunu işaretlediğini kontrol edecek bir test oluşturun
-- [ ] Kullanıcının form verilerini gönderip gönderemeyeceğini test edin
-- [ ] Bir input boş bırakılırsa form doğrulamasını test edin
+- [x] Girilen metnin sağladığınız adı içerip içermediğini kontrol etmek için bir assertion kullanın. (İpucu: .should assertion)
+- [x] `email` inputunu alın ve bir email adresi girin
+- [x] `şifre` inputunu alın ve bir şifre girin
+- [x] Kullanıcının kullanım koşulları kutusunu işaretlediğini kontrol edecek bir test oluşturun
+- [x] Kullanıcının form verilerini gönderip gönderemeyeceğini test edin
+- [x] Bir input boş bırakılırsa form doğrulamasını test edin
 
 ### Görev 3: Esnek Görevler
 

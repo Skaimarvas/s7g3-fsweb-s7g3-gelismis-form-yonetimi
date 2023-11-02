@@ -28,4 +28,37 @@ describe("Form Testleri", () => {
 
     cy.get("#email-validation").should("be.hidden");
   });
+  it("Şifre doğru yazma", () => {
+    cy.get("#password").type("deneme123");
+    cy.get("#password-validation").should("be.hidden");
+  });
+  it("Şifre yanlış yazma", () => {
+    cy.get("#password").type("den");
+    cy.get("#password-validation").should(
+      "have.text",
+      "Şifre 6 karakterden fazla olmalı!"
+    );
+  });
+
+  it("Checkbox Kontrolü", () => {
+    cy.get("#termsofservice").click();
+    cy.get("#termsofservice").should("be.checked");
+  });
+  it("Form veri gönderimi", () => {
+    cy.get("#name").type("Berat");
+    cy.get("#name-validation").should("be.hidden");
+    cy.get("#email").type("berat@arvas.com");
+    cy.get("#email-validation").should("be.hidden");
+    cy.get("#password").type("deneme123");
+    cy.get("#password-validation").should("be.hidden");
+    cy.get("#termsofservice").click();
+    cy.get("#termsofservice").should("be.checked");
+    cy.get("#submit-button").click();
+  });
+  it("İnput boş bırakılırsa testi", () => {
+    cy.get(
+      "#name-validation" || "#email-validation" || "#password-validation"
+    ).should("not.be.empty");
+    cy.get("#submit-button").click();
+  });
 });

@@ -177,7 +177,7 @@ const FormCard = ({ team, setTeam, teammember = emptyMember }) => {
             name="termsofservice"
           />
         </Form.Group>
-        <Button className="btn btn-primary" type="submit">
+        <Button className="btn btn-primary" id="submit-button" type="submit">
           Kaydet
         </Button>
       </Form>
