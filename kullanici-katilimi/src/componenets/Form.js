@@ -149,7 +149,7 @@ const FormCard = ({ team, setTeam, teammember = emptyMember }) => {
             name="email"
             isInvalid={!!fromErrors.email}
           />
-          <Form.Control.Feedback type="invalid">
+          <Form.Control.Feedback id="email-validation" type="invalid">
             {fromErrors.email}
           </Form.Control.Feedback>
         </Form.Group>
@@ -163,7 +163,7 @@ const FormCard = ({ team, setTeam, teammember = emptyMember }) => {
             name="password"
             isInvalid={!!fromErrors.password}
           />
-          <Form.Control.Feedback type="invalid">
+          <Form.Control.Feedback id="password-validation" type="invalid">
             {fromErrors.password}
           </Form.Control.Feedback>
         </Form.Group>
