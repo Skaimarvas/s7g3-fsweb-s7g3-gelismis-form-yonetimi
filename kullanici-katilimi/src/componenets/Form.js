@@ -88,7 +88,7 @@ const FormCard = ({ team, setTeam, teammember = emptyMember }) => {
   useEffect(() => {
     console.error("form error >", fromErrors);
   }, [fromErrors]);
-  //fromErros'da bir değişiklik olduğunda konsolda hata belirecek
+  //fromErrors'da bir değişiklik olduğunda konsolda hata belirecek
 
   useEffect(() => {
     teammember && setMember(teammember);
@@ -135,7 +135,7 @@ const FormCard = ({ team, setTeam, teammember = emptyMember }) => {
             name="name"
             isInvalid={!!fromErrors.name}
           />
-          <Form.Control.Feedback type="invalid">
+          <Form.Control.Feedback id="name-validation" type="invalid">
             {fromErrors.name}
           </Form.Control.Feedback>
         </Form.Group>
