@@ -13,6 +13,9 @@ const EditForm = ({ duzuye, team, setTeam, uyeDuzenle, setDuzuye }) => {
   return (
     <div>
       Edit: {userId} -
+      <Link to="/">
+        <Button className="btn btn-primary"> Ana Sayfaya Dön </Button>
+      </Link>
       <FormCard
         duzuye={duzuye}
         team={team}
@@ -20,10 +23,6 @@ const EditForm = ({ duzuye, team, setTeam, uyeDuzenle, setDuzuye }) => {
         uyeDuzenle={uyeDuzenle}
         setDuzuye={setDuzuye}
       />
-      <Button className="btn btn-primary">
-        {" "}
-        <Link to="/">Ana Sayfaya Dön</Link>{" "}
-      </Button>
     </div>
   );
 };
